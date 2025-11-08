@@ -72,8 +72,12 @@ class FilteredBinaryDataset(Dataset):
 
 def get_data_loaders(batch_size):
     data_transform = transforms.Compose([
+        transforms.Resize((224, 224)),          
+        transforms.RandomHorizontalFlip(),
+        transforms.RandomRotation(15),
+        transforms.ColorJitter(brightness=0.2, contrast=0.2),
         transforms.ToTensor(),
-        transforms.Normalize(mean=[.5], std=[.5]),
+        transforms.Normalize(mean=[0.485], std=[0.229])  
     ])
 
     train_dataset = FilteredBinaryDataset('train', data_transform)
